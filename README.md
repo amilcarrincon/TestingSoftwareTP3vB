@@ -7,4 +7,5 @@ Se debe mantener bajo control de versión el código generado.
 # Entregar:
 - Repositorio con el archivo con las pruebas unitarias y el código de producción bajo prueba
 (preferentemente en bitbucket o github).
+# Objetivo
 Se debe probar AHT10.c utilizando un mock de AHT10_port.c. Se llama a una función AHT10_Init(), y se revisa que se transmíten las tramas correctas por I2C y se emulan las respuestas que daría el sensor para ver si la función responde como debe.
