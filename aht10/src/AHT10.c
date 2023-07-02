@@ -1,6 +1,5 @@
 /*
  * AHT10.c
- *
  * Autor: Amilcar Rincon
  */
 
