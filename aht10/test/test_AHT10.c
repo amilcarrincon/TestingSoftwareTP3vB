@@ -31,7 +31,7 @@ uint8_t buffer_read_temperatura_compare[] = {0xAC, 0x33, 0x00};
 
 uint8_t buffer_read_humidity_compare_command[] = {0xAC, 0x33, 0x00};
 
-/**
+/*
  * @brief Test de inicialización del bufffer de comandos para la transmision de datos hacia
  * el sensor de temperatura y humedad AHT10.
  *
@@ -66,7 +66,6 @@ void test_init_size_transmission_AHT10(void)
 /**
  * @brief test_command_to_Read_Temp_AHT10 : función de test para verificar el buffer de comandos para efectuar
  * la lectura del valor de la temperatura.
- *
  */
 void test_command_to_read_temp_AHT10(void)
 {
@@ -100,10 +99,9 @@ void test_size_of_buffer_transmition_read_temperature_function_AHT10(void)
 
 /**
  * @brief test_convertion_data_read_in_temperature_celcius: test para verificar la correcta conversión
- * de los datos leidos del registor del sensor y convertidos a grados celcius.
+ * de los datos leidos del registro del sensor y convertidos a grados celcius.
  * Se carga en el buffer de lectura el valor equivalente a 25 °C, en donde el TEST_ASSERT_EQUAL_FLOAT(25, temperature);
  * compara el valor obtenido del registro con 25.
- *
  */
 void test_convertion_data_read_in_temperature_celcius()
 {
@@ -121,7 +119,6 @@ void test_convertion_data_read_in_temperature_celcius()
 /**
  * @brief test_size_of_buffer_transmition_read_humidity_function_AHT10: función de test para verificar el buffer de comandos para efectuar
  * la lectura del valor de la humedad.
- *
  */
 void test_size_of_buffer_transmition_read_humidity_function_AHT10(void)
 {
@@ -138,7 +135,6 @@ void test_size_of_buffer_transmition_read_humidity_function_AHT10(void)
 /**
  * @brief test_size_of_buffer_transmition_read_hum_function_AHT10: función de test para verificar el cálculo del valor
  * del tamaño del buffer de recepción de los datos del sensor.
- *
  */
 void test_size_of_buffer_transmition_read_hum_function_AHT10(void)
 {
