@@ -1,0 +1,32 @@
+---
+:source:
+  :path: test
+  :file: test_AHT10.c
+:successes:
+- :test: test_init_buffer_transmission_AHT10
+  :line: 38
+  :message: ''
+  :unity_test_time: 0
+- :test: test_init_size_transmission_AHT10
+  :line: 51
+  :message: ''
+  :unity_test_time: 0
+:failures:
+- :test: test_command_to_read_temp_AHT10
+  :line: 75
+  :message: Element 0 Expected 0xAC Was 0x00. Function AHT10_I2C_Receive Argument
+    pData. Function called with unexpected argument value.
+  :unity_test_time: 0
+- :test: test_size_of_buffer_transmition_read_temperature_function_AHT10
+  :line: 93
+  :message: Element 0 Expected 0xAC Was 0x00. Function AHT10_I2C_Receive Argument
+    pData. Function called with unexpected argument value.
+  :unity_test_time: 0
+:ignores: []
+:counts:
+  :total: 4
+  :passed: 2
+  :failed: 2
+  :ignored: 0
+:stdout: []
+:time: 0.001154344001406571

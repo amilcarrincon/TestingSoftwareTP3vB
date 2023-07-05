@@ -7,10 +7,16 @@
 #include "AHT10.h"
 #include "AHT10_port.h"
 
-uint8_t buffer_read[6];
-uint8_t buffer_transmission[3];
+#ifdef TEST
+#define TESTABLE_STATIC 
+#else
+#define TESTABLE_STATIC static
+#endif
+
+static uint8_t buffer_read[6];
+static uint8_t buffer_transmission[3];
 const uint32_t timeout = 100;
-uint16_t size;
+TESTABLE_STATIC uint16_t size;
 uint16_t size_read;
 float temperatura = -50;
 int humedad = -50;

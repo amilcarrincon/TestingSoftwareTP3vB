@@ -44,14 +44,10 @@ typedef void (* CMOCK_AHT10_I2C_Send_CALLBACK)(uint8_t devAdd, uint8_t* pData, u
 void AHT10_I2C_Send_AddCallback(CMOCK_AHT10_I2C_Send_CALLBACK Callback);
 void AHT10_I2C_Send_Stub(CMOCK_AHT10_I2C_Send_CALLBACK Callback);
 #define AHT10_I2C_Send_StubWithCallback AHT10_I2C_Send_Stub
-#define AHT10_I2C_Send_IgnoreArg_devAdd() AHT10_I2C_Send_CMockIgnoreArg_devAdd(__LINE__)
-void AHT10_I2C_Send_CMockIgnoreArg_devAdd(UNITY_LINE_TYPE cmock_line);
-#define AHT10_I2C_Send_IgnoreArg_pData() AHT10_I2C_Send_CMockIgnoreArg_pData(__LINE__)
-void AHT10_I2C_Send_CMockIgnoreArg_pData(UNITY_LINE_TYPE cmock_line);
-#define AHT10_I2C_Send_IgnoreArg_Size() AHT10_I2C_Send_CMockIgnoreArg_Size(__LINE__)
-void AHT10_I2C_Send_CMockIgnoreArg_Size(UNITY_LINE_TYPE cmock_line);
-#define AHT10_I2C_Send_IgnoreArg_Timeout() AHT10_I2C_Send_CMockIgnoreArg_Timeout(__LINE__)
-void AHT10_I2C_Send_CMockIgnoreArg_Timeout(UNITY_LINE_TYPE cmock_line);
+#define AHT10_I2C_Send_ReturnThruPtr_pData(pData) AHT10_I2C_Send_CMockReturnMemThruPtr_pData(__LINE__, pData, sizeof(uint8_t))
+#define AHT10_I2C_Send_ReturnArrayThruPtr_pData(pData, cmock_len) AHT10_I2C_Send_CMockReturnMemThruPtr_pData(__LINE__, pData, cmock_len * sizeof(*pData))
+#define AHT10_I2C_Send_ReturnMemThruPtr_pData(pData, cmock_size) AHT10_I2C_Send_CMockReturnMemThruPtr_pData(__LINE__, pData, cmock_size)
+void AHT10_I2C_Send_CMockReturnMemThruPtr_pData(UNITY_LINE_TYPE cmock_line, uint8_t* pData, size_t cmock_size);
 #define AHT10_I2C_Receive_Ignore() AHT10_I2C_Receive_CMockIgnore()
 void AHT10_I2C_Receive_CMockIgnore(void);
 #define AHT10_I2C_Receive_StopIgnore() AHT10_I2C_Receive_CMockStopIgnore()
@@ -62,14 +58,10 @@ typedef void (* CMOCK_AHT10_I2C_Receive_CALLBACK)(uint8_t devAdd, uint8_t* pData
 void AHT10_I2C_Receive_AddCallback(CMOCK_AHT10_I2C_Receive_CALLBACK Callback);
 void AHT10_I2C_Receive_Stub(CMOCK_AHT10_I2C_Receive_CALLBACK Callback);
 #define AHT10_I2C_Receive_StubWithCallback AHT10_I2C_Receive_Stub
-#define AHT10_I2C_Receive_IgnoreArg_devAdd() AHT10_I2C_Receive_CMockIgnoreArg_devAdd(__LINE__)
-void AHT10_I2C_Receive_CMockIgnoreArg_devAdd(UNITY_LINE_TYPE cmock_line);
-#define AHT10_I2C_Receive_IgnoreArg_pData() AHT10_I2C_Receive_CMockIgnoreArg_pData(__LINE__)
-void AHT10_I2C_Receive_CMockIgnoreArg_pData(UNITY_LINE_TYPE cmock_line);
-#define AHT10_I2C_Receive_IgnoreArg_Size() AHT10_I2C_Receive_CMockIgnoreArg_Size(__LINE__)
-void AHT10_I2C_Receive_CMockIgnoreArg_Size(UNITY_LINE_TYPE cmock_line);
-#define AHT10_I2C_Receive_IgnoreArg_Timeout() AHT10_I2C_Receive_CMockIgnoreArg_Timeout(__LINE__)
-void AHT10_I2C_Receive_CMockIgnoreArg_Timeout(UNITY_LINE_TYPE cmock_line);
+#define AHT10_I2C_Receive_ReturnThruPtr_pData(pData) AHT10_I2C_Receive_CMockReturnMemThruPtr_pData(__LINE__, pData, sizeof(uint8_t))
+#define AHT10_I2C_Receive_ReturnArrayThruPtr_pData(pData, cmock_len) AHT10_I2C_Receive_CMockReturnMemThruPtr_pData(__LINE__, pData, cmock_len * sizeof(*pData))
+#define AHT10_I2C_Receive_ReturnMemThruPtr_pData(pData, cmock_size) AHT10_I2C_Receive_CMockReturnMemThruPtr_pData(__LINE__, pData, cmock_size)
+void AHT10_I2C_Receive_CMockReturnMemThruPtr_pData(UNITY_LINE_TYPE cmock_line, uint8_t* pData, size_t cmock_size);
 #define AHT10_I2C_Delay_Ignore() AHT10_I2C_Delay_CMockIgnore()
 void AHT10_I2C_Delay_CMockIgnore(void);
 #define AHT10_I2C_Delay_StopIgnore() AHT10_I2C_Delay_CMockStopIgnore()
@@ -80,8 +72,6 @@ typedef void (* CMOCK_AHT10_I2C_Delay_CALLBACK)(uint32_t ret, int cmock_num_call
 void AHT10_I2C_Delay_AddCallback(CMOCK_AHT10_I2C_Delay_CALLBACK Callback);
 void AHT10_I2C_Delay_Stub(CMOCK_AHT10_I2C_Delay_CALLBACK Callback);
 #define AHT10_I2C_Delay_StubWithCallback AHT10_I2C_Delay_Stub
-#define AHT10_I2C_Delay_IgnoreArg_ret() AHT10_I2C_Delay_CMockIgnoreArg_ret(__LINE__)
-void AHT10_I2C_Delay_CMockIgnoreArg_ret(UNITY_LINE_TYPE cmock_line);
 
 #if defined(__GNUC__) && !defined(__ICC) && !defined(__TMS470__)
 #if __GNUC__ > 4 || (__GNUC__ == 4 && (__GNUC_MINOR__ > 6 || (__GNUC_MINOR__ == 6 && __GNUC_PATCHLEVEL__ > 0)))

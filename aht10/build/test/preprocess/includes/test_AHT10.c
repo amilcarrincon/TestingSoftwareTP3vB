@@ -1,4 +1,4 @@
 ---
 - "/var/lib/gems/2.5.0/gems/ceedling-0.31.1/vendor/unity/src/unity.h"
+- build/test/mocks/mock_AHT10_port.h
 - src/AHT10.h
-- mock_AHT10_port.h

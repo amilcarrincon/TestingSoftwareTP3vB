@@ -16,10 +16,6 @@ extern void test_init_buffer_transmission_AHT10(void);
 extern void test_init_size_transmission_AHT10(void);
 extern void test_command_to_read_temp_AHT10(void);
 extern void test_size_of_buffer_transmition_read_temperature_function_AHT10(void);
-extern void test_convertion_data_read_in_temperature_celcius();
-extern void test_size_of_buffer_transmition_read_humidity_function_AHT10(void);
-extern void test_size_of_buffer_transmition_read_hum_function_AHT10(void);
-extern void test_convertion_data_read_in_humidity_percent(void);
 
 
 /*=======Mock Management=====*/
@@ -93,14 +89,10 @@ static void run_test(UnityTestFunction func, const char* name, UNITY_LINE_TYPE l
 int main(void)
 {
   UnityBegin("test_AHT10.c");
-  run_test(test_init_buffer_transmission_AHT10, "test_init_buffer_transmission_AHT10", 39);
-  run_test(test_init_size_transmission_AHT10, "test_init_size_transmission_AHT10", 52);
-  run_test(test_command_to_read_temp_AHT10, "test_command_to_read_temp_AHT10", 71);
-  run_test(test_size_of_buffer_transmition_read_temperature_function_AHT10, "test_size_of_buffer_transmition_read_temperature_function_AHT10", 88);
-  run_test(test_convertion_data_read_in_temperature_celcius, "test_convertion_data_read_in_temperature_celcius", 102);
-  run_test(test_size_of_buffer_transmition_read_humidity_function_AHT10, "test_size_of_buffer_transmition_read_humidity_function_AHT10", 122);
-  run_test(test_size_of_buffer_transmition_read_hum_function_AHT10, "test_size_of_buffer_transmition_read_hum_function_AHT10", 139);
-  run_test(test_convertion_data_read_in_humidity_percent, "test_convertion_data_read_in_humidity_percent", 157);
+  run_test(test_init_buffer_transmission_AHT10, "test_init_buffer_transmission_AHT10", 38);
+  run_test(test_init_size_transmission_AHT10, "test_init_size_transmission_AHT10", 51);
+  run_test(test_command_to_read_temp_AHT10, "test_command_to_read_temp_AHT10", 68);
+  run_test(test_size_of_buffer_transmition_read_temperature_function_AHT10, "test_size_of_buffer_transmition_read_temperature_function_AHT10", 85);
 
   CMock_Guts_MemFreeFinal();
   return UnityEnd();

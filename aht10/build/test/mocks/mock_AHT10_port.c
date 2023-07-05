@@ -30,10 +30,9 @@ typedef struct _CMOCK_AHT10_I2C_Send_CALL_INSTANCE
   uint8_t* Expected_pData;
   uint16_t Expected_Size;
   uint32_t Expected_Timeout;
-  char IgnoreArg_devAdd;
-  char IgnoreArg_pData;
-  char IgnoreArg_Size;
-  char IgnoreArg_Timeout;
+  char ReturnThruPtr_pData_Used;
+  uint8_t* ReturnThruPtr_pData_Val;
+  size_t ReturnThruPtr_pData_Size;
 
 } CMOCK_AHT10_I2C_Send_CALL_INSTANCE;
 
@@ -45,10 +44,9 @@ typedef struct _CMOCK_AHT10_I2C_Receive_CALL_INSTANCE
   uint8_t* Expected_pData;
   uint16_t Expected_Size;
   uint32_t Expected_Timeout;
-  char IgnoreArg_devAdd;
-  char IgnoreArg_pData;
-  char IgnoreArg_Size;
-  char IgnoreArg_Timeout;
+  char ReturnThruPtr_pData_Used;
+  uint8_t* ReturnThruPtr_pData_Val;
+  size_t ReturnThruPtr_pData_Size;
 
 } CMOCK_AHT10_I2C_Receive_CALL_INSTANCE;
 
@@ -57,7 +55,6 @@ typedef struct _CMOCK_AHT10_I2C_Delay_CALL_INSTANCE
   UNITY_LINE_TYPE LineNumber;
   int CallOrder;
   uint32_t Expected_ret;
-  char IgnoreArg_ret;
 
 } CMOCK_AHT10_I2C_Delay_CALL_INSTANCE;
 
@@ -253,12 +250,10 @@ void AHT10_I2C_Send(uint8_t devAdd, uint8_t* pData, uint16_t Size, uint32_t Time
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledEarly);
   if (cmock_call_instance->CallOrder < GlobalVerifyOrder)
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledLate);
-  if (!cmock_call_instance->IgnoreArg_devAdd)
   {
     UNITY_SET_DETAILS(CMockString_AHT10_I2C_Send,CMockString_devAdd);
     UNITY_TEST_ASSERT_EQUAL_HEX8(cmock_call_instance->Expected_devAdd, devAdd, cmock_line, CMockStringMismatch);
   }
-  if (!cmock_call_instance->IgnoreArg_pData)
   {
     UNITY_SET_DETAILS(CMockString_AHT10_I2C_Send,CMockString_pData);
     if (cmock_call_instance->Expected_pData == NULL)
@@ -266,12 +261,10 @@ void AHT10_I2C_Send(uint8_t devAdd, uint8_t* pData, uint16_t Size, uint32_t Time
     else
       { UNITY_TEST_ASSERT_EQUAL_HEX8_ARRAY(cmock_call_instance->Expected_pData, pData, 1, cmock_line, CMockStringMismatch); }
   }
-  if (!cmock_call_instance->IgnoreArg_Size)
   {
     UNITY_SET_DETAILS(CMockString_AHT10_I2C_Send,CMockString_Size);
     UNITY_TEST_ASSERT_EQUAL_HEX16(cmock_call_instance->Expected_Size, Size, cmock_line, CMockStringMismatch);
   }
-  if (!cmock_call_instance->IgnoreArg_Timeout)
   {
     UNITY_SET_DETAILS(CMockString_AHT10_I2C_Send,CMockString_Timeout);
     UNITY_TEST_ASSERT_EQUAL_HEX32(cmock_call_instance->Expected_Timeout, Timeout, cmock_line, CMockStringMismatch);
@@ -280,6 +273,12 @@ void AHT10_I2C_Send(uint8_t devAdd, uint8_t* pData, uint16_t Size, uint32_t Time
   {
     Mock.AHT10_I2C_Send_CallbackFunctionPointer(devAdd, pData, Size, Timeout, Mock.AHT10_I2C_Send_CallbackCalls++);
   }
+  if (cmock_call_instance->ReturnThruPtr_pData_Used)
+  {
+    UNITY_TEST_ASSERT_NOT_NULL(pData, cmock_line, CMockStringPtrIsNULL);
+    memcpy((void*)pData, (void*)cmock_call_instance->ReturnThruPtr_pData_Val,
+      cmock_call_instance->ReturnThruPtr_pData_Size);
+  }
   UNITY_CLR_DETAILS();
 }
 
@@ -287,13 +286,10 @@ void CMockExpectParameters_AHT10_I2C_Send(CMOCK_AHT10_I2C_Send_CALL_INSTANCE* cm
 void CMockExpectParameters_AHT10_I2C_Send(CMOCK_AHT10_I2C_Send_CALL_INSTANCE* cmock_call_instance, uint8_t devAdd, uint8_t* pData, uint16_t Size, uint32_t Timeout)
 {
   cmock_call_instance->Expected_devAdd = devAdd;
-  cmock_call_instance->IgnoreArg_devAdd = 0;
   cmock_call_instance->Expected_pData = pData;
-  cmock_call_instance->IgnoreArg_pData = 0;
+  cmock_call_instance->ReturnThruPtr_pData_Used = 0;
   cmock_call_instance->Expected_Size = Size;
-  cmock_call_instance->IgnoreArg_Size = 0;
   cmock_call_instance->Expected_Timeout = Timeout;
-  cmock_call_instance->IgnoreArg_Timeout = 0;
 }
 
 void AHT10_I2C_Send_CMockIgnore(void)
@@ -333,32 +329,13 @@ void AHT10_I2C_Send_Stub(CMOCK_AHT10_I2C_Send_CALLBACK Callback)
   Mock.AHT10_I2C_Send_CallbackFunctionPointer = Callback;
 }
 
-void AHT10_I2C_Send_CMockIgnoreArg_devAdd(UNITY_LINE_TYPE cmock_line)
+void AHT10_I2C_Send_CMockReturnMemThruPtr_pData(UNITY_LINE_TYPE cmock_line, uint8_t* pData, size_t cmock_size)
 {
   CMOCK_AHT10_I2C_Send_CALL_INSTANCE* cmock_call_instance = (CMOCK_AHT10_I2C_Send_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.AHT10_I2C_Send_CallInstance));
-  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
-  cmock_call_instance->IgnoreArg_devAdd = 1;
-}
-
-void AHT10_I2C_Send_CMockIgnoreArg_pData(UNITY_LINE_TYPE cmock_line)
-{
-  CMOCK_AHT10_I2C_Send_CALL_INSTANCE* cmock_call_instance = (CMOCK_AHT10_I2C_Send_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.AHT10_I2C_Send_CallInstance));
-  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
-  cmock_call_instance->IgnoreArg_pData = 1;
-}
-
-void AHT10_I2C_Send_CMockIgnoreArg_Size(UNITY_LINE_TYPE cmock_line)
-{
-  CMOCK_AHT10_I2C_Send_CALL_INSTANCE* cmock_call_instance = (CMOCK_AHT10_I2C_Send_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.AHT10_I2C_Send_CallInstance));
-  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
-  cmock_call_instance->IgnoreArg_Size = 1;
-}
-
-void AHT10_I2C_Send_CMockIgnoreArg_Timeout(UNITY_LINE_TYPE cmock_line)
-{
-  CMOCK_AHT10_I2C_Send_CALL_INSTANCE* cmock_call_instance = (CMOCK_AHT10_I2C_Send_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.AHT10_I2C_Send_CallInstance));
-  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
-  cmock_call_instance->IgnoreArg_Timeout = 1;
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringPtrPreExp);
+  cmock_call_instance->ReturnThruPtr_pData_Used = 1;
+  cmock_call_instance->ReturnThruPtr_pData_Val = pData;
+  cmock_call_instance->ReturnThruPtr_pData_Size = cmock_size;
 }
 
 void AHT10_I2C_Receive(uint8_t devAdd, uint8_t* pData, uint16_t Size, uint32_t Timeout)
@@ -386,12 +363,10 @@ void AHT10_I2C_Receive(uint8_t devAdd, uint8_t* pData, uint16_t Size, uint32_t T
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledEarly);
   if (cmock_call_instance->CallOrder < GlobalVerifyOrder)
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledLate);
-  if (!cmock_call_instance->IgnoreArg_devAdd)
   {
     UNITY_SET_DETAILS(CMockString_AHT10_I2C_Receive,CMockString_devAdd);
     UNITY_TEST_ASSERT_EQUAL_HEX8(cmock_call_instance->Expected_devAdd, devAdd, cmock_line, CMockStringMismatch);
   }
-  if (!cmock_call_instance->IgnoreArg_pData)
   {
     UNITY_SET_DETAILS(CMockString_AHT10_I2C_Receive,CMockString_pData);
     if (cmock_call_instance->Expected_pData == NULL)
@@ -399,12 +374,10 @@ void AHT10_I2C_Receive(uint8_t devAdd, uint8_t* pData, uint16_t Size, uint32_t T
     else
       { UNITY_TEST_ASSERT_EQUAL_HEX8_ARRAY(cmock_call_instance->Expected_pData, pData, 1, cmock_line, CMockStringMismatch); }
   }
-  if (!cmock_call_instance->IgnoreArg_Size)
   {
     UNITY_SET_DETAILS(CMockString_AHT10_I2C_Receive,CMockString_Size);
     UNITY_TEST_ASSERT_EQUAL_HEX16(cmock_call_instance->Expected_Size, Size, cmock_line, CMockStringMismatch);
   }
-  if (!cmock_call_instance->IgnoreArg_Timeout)
   {
     UNITY_SET_DETAILS(CMockString_AHT10_I2C_Receive,CMockString_Timeout);
     UNITY_TEST_ASSERT_EQUAL_HEX32(cmock_call_instance->Expected_Timeout, Timeout, cmock_line, CMockStringMismatch);
@@ -413,6 +386,12 @@ void AHT10_I2C_Receive(uint8_t devAdd, uint8_t* pData, uint16_t Size, uint32_t T
   {
     Mock.AHT10_I2C_Receive_CallbackFunctionPointer(devAdd, pData, Size, Timeout, Mock.AHT10_I2C_Receive_CallbackCalls++);
   }
+  if (cmock_call_instance->ReturnThruPtr_pData_Used)
+  {
+    UNITY_TEST_ASSERT_NOT_NULL(pData, cmock_line, CMockStringPtrIsNULL);
+    memcpy((void*)pData, (void*)cmock_call_instance->ReturnThruPtr_pData_Val,
+      cmock_call_instance->ReturnThruPtr_pData_Size);
+  }
   UNITY_CLR_DETAILS();
 }
 
@@ -420,13 +399,10 @@ void CMockExpectParameters_AHT10_I2C_Receive(CMOCK_AHT10_I2C_Receive_CALL_INSTAN
 void CMockExpectParameters_AHT10_I2C_Receive(CMOCK_AHT10_I2C_Receive_CALL_INSTANCE* cmock_call_instance, uint8_t devAdd, uint8_t* pData, uint16_t Size, uint32_t Timeout)
 {
   cmock_call_instance->Expected_devAdd = devAdd;
-  cmock_call_instance->IgnoreArg_devAdd = 0;
   cmock_call_instance->Expected_pData = pData;
-  cmock_call_instance->IgnoreArg_pData = 0;
+  cmock_call_instance->ReturnThruPtr_pData_Used = 0;
   cmock_call_instance->Expected_Size = Size;
-  cmock_call_instance->IgnoreArg_Size = 0;
   cmock_call_instance->Expected_Timeout = Timeout;
-  cmock_call_instance->IgnoreArg_Timeout = 0;
 }
 
 void AHT10_I2C_Receive_CMockIgnore(void)
@@ -466,32 +442,13 @@ void AHT10_I2C_Receive_Stub(CMOCK_AHT10_I2C_Receive_CALLBACK Callback)
   Mock.AHT10_I2C_Receive_CallbackFunctionPointer = Callback;
 }
 
-void AHT10_I2C_Receive_CMockIgnoreArg_devAdd(UNITY_LINE_TYPE cmock_line)
+void AHT10_I2C_Receive_CMockReturnMemThruPtr_pData(UNITY_LINE_TYPE cmock_line, uint8_t* pData, size_t cmock_size)
 {
   CMOCK_AHT10_I2C_Receive_CALL_INSTANCE* cmock_call_instance = (CMOCK_AHT10_I2C_Receive_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.AHT10_I2C_Receive_CallInstance));
-  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
-  cmock_call_instance->IgnoreArg_devAdd = 1;
-}
-
-void AHT10_I2C_Receive_CMockIgnoreArg_pData(UNITY_LINE_TYPE cmock_line)
-{
-  CMOCK_AHT10_I2C_Receive_CALL_INSTANCE* cmock_call_instance = (CMOCK_AHT10_I2C_Receive_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.AHT10_I2C_Receive_CallInstance));
-  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
-  cmock_call_instance->IgnoreArg_pData = 1;
-}
-
-void AHT10_I2C_Receive_CMockIgnoreArg_Size(UNITY_LINE_TYPE cmock_line)
-{
-  CMOCK_AHT10_I2C_Receive_CALL_INSTANCE* cmock_call_instance = (CMOCK_AHT10_I2C_Receive_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.AHT10_I2C_Receive_CallInstance));
-  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
-  cmock_call_instance->IgnoreArg_Size = 1;
-}
-
-void AHT10_I2C_Receive_CMockIgnoreArg_Timeout(UNITY_LINE_TYPE cmock_line)
-{
-  CMOCK_AHT10_I2C_Receive_CALL_INSTANCE* cmock_call_instance = (CMOCK_AHT10_I2C_Receive_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.AHT10_I2C_Receive_CallInstance));
-  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
-  cmock_call_instance->IgnoreArg_Timeout = 1;
+  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringPtrPreExp);
+  cmock_call_instance->ReturnThruPtr_pData_Used = 1;
+  cmock_call_instance->ReturnThruPtr_pData_Val = pData;
+  cmock_call_instance->ReturnThruPtr_pData_Size = cmock_size;
 }
 
 void AHT10_I2C_Delay(uint32_t ret)
@@ -519,7 +476,6 @@ void AHT10_I2C_Delay(uint32_t ret)
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledEarly);
   if (cmock_call_instance->CallOrder < GlobalVerifyOrder)
     UNITY_TEST_FAIL(cmock_line, CMockStringCalledLate);
-  if (!cmock_call_instance->IgnoreArg_ret)
   {
     UNITY_SET_DETAILS(CMockString_AHT10_I2C_Delay,CMockString_ret);
     UNITY_TEST_ASSERT_EQUAL_HEX32(cmock_call_instance->Expected_ret, ret, cmock_line, CMockStringMismatch);
@@ -535,7 +491,6 @@ void CMockExpectParameters_AHT10_I2C_Delay(CMOCK_AHT10_I2C_Delay_CALL_INSTANCE* 
 void CMockExpectParameters_AHT10_I2C_Delay(CMOCK_AHT10_I2C_Delay_CALL_INSTANCE* cmock_call_instance, uint32_t ret)
 {
   cmock_call_instance->Expected_ret = ret;
-  cmock_call_instance->IgnoreArg_ret = 0;
 }
 
 void AHT10_I2C_Delay_CMockIgnore(void)
@@ -573,12 +528,5 @@ void AHT10_I2C_Delay_Stub(CMOCK_AHT10_I2C_Delay_CALLBACK Callback)
   Mock.AHT10_I2C_Delay_IgnoreBool = (char)0;
   Mock.AHT10_I2C_Delay_CallbackBool = (char)0;
   Mock.AHT10_I2C_Delay_CallbackFunctionPointer = Callback;
-}
-
-void AHT10_I2C_Delay_CMockIgnoreArg_ret(UNITY_LINE_TYPE cmock_line)
-{
-  CMOCK_AHT10_I2C_Delay_CALL_INSTANCE* cmock_call_instance = (CMOCK_AHT10_I2C_Delay_CALL_INSTANCE*)CMock_Guts_GetAddressFor(CMock_Guts_MemEndOfChain(Mock.AHT10_I2C_Delay_CallInstance));
-  UNITY_TEST_ASSERT_NOT_NULL(cmock_call_instance, cmock_line, CMockStringIgnPreExp);
-  cmock_call_instance->IgnoreArg_ret = 1;
 }
 
