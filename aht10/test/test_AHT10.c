@@ -112,3 +112,57 @@ void test_convertion_data_read_in_temperature_celcius()
     temperature = AHT10_Read_Temp();
     TEST_ASSERT_EQUAL_FLOAT(25, temperature);
 }
+<<<<<<< HEAD
+=======
+
+/**
+ * @brief test_size_of_buffer_transmition_read_humidity_function_AHT10: función de test para verificar el buffer de comandos para efectuar
+ * la lectura del valor de la humedad.
+ */
+void test_size_of_buffer_transmition_read_humidity_function_AHT10(void)
+{
+    buffer_transmission[0] = 0xFF;
+    buffer_transmission[1] = 0xFF;
+    buffer_transmission[2] = 0xFF;
+    AHT10_I2C_Send_Ignore();
+    AHT10_I2C_Delay_Ignore();
+    AHT10_I2C_Receive_Ignore();
+    AHT10_Read_Hum();
+    TEST_ASSERT_EQUAL_UINT8_ARRAY(buffer_read_humidity_compare_command, buffer_transmission, 3);
+}
+
+/**
+ * @brief test_size_of_buffer_transmition_read_hum_function_AHT10: función de test para verificar el cálculo del valor
+ * del tamaño del buffer de recepción de los datos del sensor.
+ */
+void test_size_of_buffer_transmition_read_hum_function_AHT10(void)
+{
+    size = 0u;
+    buffer_transmission[0] = 0xFF;
+    buffer_transmission[1] = 0xFF;
+    buffer_transmission[2] = 0xFF;
+    AHT10_I2C_Send_Ignore();
+    AHT10_I2C_Delay_Ignore();
+    AHT10_I2C_Receive_Ignore();
+    AHT10_Read_Hum();
+    TEST_ASSERT_EQUAL_HEX16(0x0006, size);
+}
+
+/**
+ * @brief test_convertion_data_read_in_humidity_percent: función de test para verificar el return de la función
+ * AHT10_Read_Hum(). Se asigna al buffer read, el valor del registro equivalente al 50% de humedad.
+ *
+ */
+void test_convertion_data_read_in_humidity_percent(void)
+{
+    int humidity = 0u;
+    buffer_read[1] = 0b10000000;
+    buffer_read[2] = 0b00000000;
+    buffer_read[3] = 0b00001111;
+    AHT10_I2C_Send_Ignore();
+    AHT10_I2C_Delay_Ignore();
+    AHT10_I2C_Receive_Ignore();
+    humidity = AHT10_Read_Hum();
+    TEST_ASSERT_EQUAL_INT(50, humidity);
+}
+>>>>>>> f5b59f3efa43e82f3139760e6096f60ceb12cedd
